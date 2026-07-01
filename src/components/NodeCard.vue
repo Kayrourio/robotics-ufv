@@ -15,6 +15,10 @@ function onMousedown(e) {
   startDrag(props.discipline.code, e.currentTarget, e)
 }
 
+function onTouchstart(e) {
+  startDrag(props.discipline.code, e.currentTarget, e)
+}
+
 function onDblclick() {
   onNodeDoubleClick(props.discipline.code)
 }
@@ -26,6 +30,7 @@ function onDblclick() {
     :id="'node-' + discipline.code"
     :style="{ '--area-color': areaColor }"
     @mousedown="onMousedown"
+    @touchstart="onTouchstart"
     @dblclick="onDblclick"
   >
     <div class="node-period">P{{ discipline.period }}</div>

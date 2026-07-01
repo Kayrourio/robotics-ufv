@@ -49,6 +49,48 @@ let isPanning = false
 let panStart = { x: 0, y: 0 }
 let panMoved = false
 let previousEffective = null
+let pinch = null
+let lastTap = { code: null, time: 0 }
+
+// Normalizes mouse/touch events to a single {x, y} point so pan/drag/click
+// logic can be shared between input types instead of duplicated.
+function getPoint(e) {
+  if (e.touches && e.touches.length) return { x: e.touches[0].clientX, y: e.touches[0].clientY }
+  if (e.changedTouches && e.changedTouches.length) {
+    return { x: e.changedTouches[0].clientX, y: e.changedTouches[0].clientY }
+  }
+  return { x: e.clientX, y: e.clientY }
+}
+
+function pinchDistance(touches) {
+  return Math.hypot(touches[0].clientX - touches[1].clientX, touches[0].clientY - touches[1].clientY)
+}
+
+function handlePinchMove(touches) {
+  const dist = pinchDistance(touches)
+  if (!pinch) {
+    pinch = {
+      startDist: dist,
+      startZoom: zoom,
+      startPanX: pan.x,
+      startPanY: pan.y,
+      centerX: (touches[0].clientX + touches[1].clientX) / 2,
+      centerY: (touches[0].clientY + touches[1].clientY) / 2,
+    }
+    return
+  }
+  const scale = dist / pinch.startDist
+  const newZoom = Math.min(2.0, Math.max(0.25, pinch.startZoom * scale))
+  const rect = canvasWrapper.getBoundingClientRect()
+  const offsetX = pinch.centerX - rect.left
+  const offsetY = pinch.centerY - rect.top
+  const ratio = newZoom / pinch.startZoom
+  pan.x = offsetX - ratio * (offsetX - pinch.startPanX)
+  pan.y = offsetY - ratio * (offsetY - pinch.startPanY)
+  zoom = newZoom
+  applyTransform()
+  updateMinimap()
+}
 
 let canvasWrapper = null
 let canvasInner = null
@@ -177,13 +219,15 @@ function hideDropTarget() {
 }
 
 export function startDrag(code, el, e) {
+  if (e.touches && e.touches.length > 1) return // let pinch-zoom take over
   e.preventDefault()
   e.stopPropagation()
+  const p = getPoint(e)
   drag = {
     code,
     el,
-    startMX: e.clientX,
-    startMY: e.clientY,
+    startMX: p.x,
+    startMY: p.y,
     startNX: nodePositions[code].x,
     startNY: nodePositions[code].y,
     moved: false,
@@ -193,8 +237,9 @@ export function startDrag(code, el, e) {
 
 function onDragMove(e) {
   if (!drag) return
-  const dx = (e.clientX - drag.startMX) / zoom
-  const dy = (e.clientY - drag.startMY) / zoom
+  const p = getPoint(e)
+  const dx = (p.x - drag.startMX) / zoom
+  const dy = (p.y - drag.startMY) / zoom
   if (Math.abs(dx) > 3 || Math.abs(dy) > 3) drag.moved = true
 
   nodePositions[drag.code].x = drag.startNX + dx
@@ -214,35 +259,63 @@ function onDragMove(e) {
 }
 
 function onCanvasMousedown(e) {
+  if (e.touches) {
+    if (e.touches.length > 1) return // let pinch-zoom take over
+    e.preventDefault()
+  }
   if (e.target.closest('.node-card')) return
+  const p = getPoint(e)
   isPanning = true
   panMoved = false
-  panStart = { x: e.clientX - pan.x, y: e.clientY - pan.y }
+  panStart = { x: p.x - pan.x, y: p.y - pan.y }
   canvasWrapper.classList.add('panning')
 }
 
 function onDocumentMousemove(e) {
+  if (e.touches && e.touches.length === 2) {
+    e.preventDefault()
+    handlePinchMove(e.touches)
+    return
+  }
+  if (pinch) pinch = null
+
   if (drag) {
+    if (e.touches) e.preventDefault()
     onDragMove(e)
     return
   }
   if (isPanning) {
-    const dx = e.clientX - panStart.x - pan.x
-    const dy = e.clientY - panStart.y - pan.y
+    if (e.touches) e.preventDefault()
+    const p = getPoint(e)
+    const dx = p.x - panStart.x - pan.x
+    const dy = p.y - panStart.y - pan.y
     if (Math.abs(dx) > 3 || Math.abs(dy) > 3) panMoved = true
-    pan.x = e.clientX - panStart.x
-    pan.y = e.clientY - panStart.y
+    pan.x = p.x - panStart.x
+    pan.y = p.y - panStart.y
     applyTransform()
     updateMinimap()
   }
 }
 
-function onDocumentMouseup() {
+function onDocumentMouseup(e) {
+  if (e && e.touches && e.touches.length < 2) pinch = null
+
   if (drag) {
     drag.el.classList.remove('dragging')
     hideDropTarget()
     if (!drag.moved) {
-      selectNode(drag.code)
+      if (e && e.changedTouches) {
+        const now = Date.now()
+        if (lastTap.code === drag.code && now - lastTap.time < 350) {
+          onNodeDoubleClick(drag.code)
+          lastTap = { code: null, time: 0 }
+        } else {
+          selectNode(drag.code)
+          lastTap = { code: drag.code, time: now }
+        }
+      } else {
+        selectNode(drag.code)
+      }
     } else {
       const effectiveBefore = computeEffectivePeriods()
       const minReq = getMinRequiredPeriod(drag.code, effectiveBefore)
@@ -294,8 +367,12 @@ function onMinimapClick(e) {
 function bindCanvasEvents() {
   canvasWrapper.addEventListener('mousedown', onCanvasMousedown)
   canvasWrapper.addEventListener('wheel', onWheel, { passive: false })
+  canvasWrapper.addEventListener('touchstart', onCanvasMousedown, { passive: false })
   document.addEventListener('mousemove', onDocumentMousemove)
   document.addEventListener('mouseup', onDocumentMouseup)
+  document.addEventListener('touchmove', onDocumentMousemove, { passive: false })
+  document.addEventListener('touchend', onDocumentMouseup)
+  document.addEventListener('touchcancel', onDocumentMouseup)
   minimapEl.addEventListener('click', onMinimapClick)
 }
 
@@ -303,8 +380,12 @@ export function unbindCanvasEvents() {
   if (!canvasWrapper) return
   canvasWrapper.removeEventListener('mousedown', onCanvasMousedown)
   canvasWrapper.removeEventListener('wheel', onWheel)
+  canvasWrapper.removeEventListener('touchstart', onCanvasMousedown)
   document.removeEventListener('mousemove', onDocumentMousemove)
   document.removeEventListener('mouseup', onDocumentMouseup)
+  document.removeEventListener('touchmove', onDocumentMousemove)
+  document.removeEventListener('touchend', onDocumentMouseup)
+  document.removeEventListener('touchcancel', onDocumentMouseup)
   if (minimapEl) minimapEl.removeEventListener('click', onMinimapClick)
 }
 
