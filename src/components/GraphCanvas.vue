@@ -17,6 +17,13 @@ const minimapRef = ref(null)
 const zoomIndicatorRef = ref(null)
 const dropTargetRef = ref(null)
 
+// dica de "arraste para navegar" só em telas de toque estreitas, some no
+// primeiro drag/scroll do usuário
+const showPanHint = ref(window.matchMedia('(max-width: 700px)').matches)
+function dismissPanHint() {
+  showPanHint.value = false
+}
+
 let stopWatch = null
 
 onMounted(() => {
@@ -28,6 +35,10 @@ onMounted(() => {
     zoomIndicator: zoomIndicatorRef.value,
     dropTarget: dropTargetRef.value,
   })
+
+  if (showPanHint.value) {
+    wrapperRef.value.addEventListener('pointerdown', dismissPanHint, { once: true })
+  }
 
   stopWatch = watchEffect(() => {
     if (!store.selected) {
@@ -66,5 +77,37 @@ onUnmounted(() => {
     <mini-map ref="minimapRef"></mini-map>
     <div id="zoom-indicator" ref="zoomIndicatorRef">85%</div>
     <area-legend></area-legend>
+    <transition name="pan-hint-fade">
+      <span v-if="showPanHint" class="pan-hint">← ARRASTE PARA NAVEGAR →</span>
+    </transition>
   </div>
 </template>
+
+<style scoped>
+.pan-hint {
+  position: absolute;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  color: rgba(240, 240, 240, 0.35);
+  background: rgba(13, 13, 13, 0.7);
+  padding: 5px 12px;
+  border-radius: 3px;
+  pointer-events: none;
+  white-space: nowrap;
+  z-index: 5;
+}
+.pan-hint-fade-enter-active {
+  transition: opacity 300ms ease;
+}
+.pan-hint-fade-leave-active {
+  transition: opacity 200ms ease;
+}
+.pan-hint-fade-enter-from,
+.pan-hint-fade-leave-to {
+  opacity: 0;
+}
+</style>

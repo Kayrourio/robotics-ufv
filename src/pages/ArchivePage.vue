@@ -16,6 +16,11 @@ import SiteFooter from '../components/hub/SiteFooter.vue'
 
 const typeLabels = { todos: 'Todos', prova: 'Provas', lista: 'Listas', resumo: 'Resumos', slide: 'Slides', livro: 'Livros' }
 const typeFilters = ['todos', ...TYPES]
+
+function jumpTo(period) {
+  const el = document.getElementById('periodo-' + period)
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+}
 </script>
 
 <template>
@@ -57,10 +62,18 @@ const typeFilters = ['todos', ...TYPES]
       </div>
     </div>
 
+    <!-- atalho de período: só aparece em telas estreitas, onde os 55 cards
+         em coluna única viram uma rolagem bem longa -->
+    <nav v-if="filteredPeriods.length > 1" class="arc-jump hub-wrap" aria-label="Ir para período">
+      <button v-for="p in filteredPeriods" :key="p.period" class="arc-jump-chip hub-mono" @click="jumpTo(p.period)">
+        {{ p.period }}º
+      </button>
+    </nav>
+
     <main class="arc-body hub-wrap">
       <div v-if="!filteredPeriods.length" class="arc-empty hub-mono">Nenhum material encontrado.</div>
 
-      <section v-for="p in filteredPeriods" :key="p.period" class="arc-period">
+      <section v-for="p in filteredPeriods" :key="p.period" :id="'periodo-' + p.period" class="arc-period">
         <div class="arc-period-head" v-reveal="0">
           <span class="arc-period-title">{{ p.title }}</span>
           <span class="hub-mono arc-period-count">{{ p.count }}</span>
@@ -183,7 +196,7 @@ const typeFilters = ['todos', ...TYPES]
 .search-ph {
   position: absolute;
   left: 18px;
-  font-size: 15px;
+  font-size: 16px;
   color: var(--hub-faint);
   pointer-events: none;
   transition: opacity 120ms;
@@ -199,7 +212,7 @@ const typeFilters = ['todos', ...TYPES]
   border: none;
   outline: none;
   background: none;
-  font-size: 15px;
+  font-size: 16px;
   color: var(--hub-black);
   position: relative;
   z-index: 1;
@@ -211,8 +224,15 @@ const typeFilters = ['todos', ...TYPES]
   flex-wrap: wrap;
 }
 
+.arc-jump {
+  display: none;
+}
+
 .arc-body {
   padding: 40px 0 64px;
+}
+.arc-period {
+  scroll-margin-top: 66px;
 }
 .arc-empty {
   color: var(--hub-faint);
@@ -417,6 +437,36 @@ const typeFilters = ['todos', ...TYPES]
   }
   .arc-h1 {
     font-size: 32px;
+  }
+  .arc-jump {
+    display: flex;
+    gap: 6px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-top: 4px;
+    padding-bottom: 14px;
+    position: sticky;
+    top: 0;
+    z-index: 15;
+    background: var(--hub-off);
+  }
+  .arc-jump::-webkit-scrollbar {
+    display: none;
+  }
+  .arc-jump-chip {
+    flex: 0 0 auto;
+    font-size: 12px;
+    padding: 7px 13px;
+    border-radius: 3px;
+    border: 1px solid var(--hub-line);
+    background: #fff;
+    color: var(--hub-muted);
+    cursor: pointer;
+  }
+  .arc-jump-chip:active {
+    border-color: var(--hub-red);
+    color: var(--hub-red);
   }
 }
 </style>

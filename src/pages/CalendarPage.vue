@@ -207,7 +207,7 @@ onMounted(loadCalendar)
   flex-wrap: wrap;
 }
 .cal-select {
-  font-size: 12px;
+  font-size: 16px;
   padding: 8px 12px;
   border: 1px solid var(--hub-line);
   border-radius: 3px;

@@ -100,7 +100,7 @@ function open(link) {
 .search-ph {
   position: absolute;
   left: 18px;
-  font-size: 15px;
+  font-size: 16px;
   color: var(--hub-faint);
   pointer-events: none;
   transition: opacity 120ms;
@@ -116,7 +116,7 @@ function open(link) {
   border: none;
   outline: none;
   background: none;
-  font-size: 15px;
+  font-size: 16px;
   color: var(--hub-black);
   position: relative;
   z-index: 1;
@@ -176,7 +176,7 @@ function open(link) {
   border-color: var(--hub-line);
 }
 .lk-card-label {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
   margin-bottom: 6px;
 }
