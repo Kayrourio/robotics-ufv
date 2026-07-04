@@ -12,7 +12,7 @@ const links = [
 <template>
   <footer class="hub-footer">
     <div class="hub-wrap hub-footer-inner">
-      <span class="hub-footer-brand">ERO <span style="color: var(--hub-red)">//</span> HUB · UFV · 2026</span>
+      <span class="hub-footer-brand">ROBÓTICA <span style="color: var(--hub-red)">//</span> HUB · UFV · 2026</span>
       <div class="hub-footer-links">
         <button v-for="l in links" :key="l.path" @click="navigate(l.path)">{{ l.label }}</button>
       </div>

@@ -92,7 +92,7 @@ onMounted(loadCalendar)
       </div>
 
       <div class="hero-strip hub-wrap">
-        <span class="hub-mono">LAT -20.7546° · LON -42.8825° · UFV · VIÇOSA · MG · SISTEMA: ERO HUB v0.1</span>
+        <span class="hub-mono">LAT -20.7546° · LON -42.8825° · UFV · VIÇOSA · MG · SISTEMA: ROBÓTICA HUB v0.1</span>
       </div>
     </section>
 
@@ -128,7 +128,7 @@ onMounted(loadCalendar)
       <div class="hub-wrap">
         <div class="section-head" v-reveal="0">
           <div>
-            <div class="hub-eyebrow">02 — ERO ARCHIVE</div>
+            <div class="hub-eyebrow">01 — ERO ARCHIVE</div>
             <h2 class="section-h2">Material de todas as disciplinas, em um lugar.</h2>
           </div>
           <span class="hub-mono badge">BETA · CONSTRUINDO</span>
@@ -154,34 +154,11 @@ onMounted(loadCalendar)
       </div>
     </section>
 
-    <!-- GRAPH -->
-    <section class="section-white">
-      <div class="hub-wrap graph-grid">
-        <div v-reveal="0"><graph-preview></graph-preview></div>
-        <div class="graph-copy">
-          <span class="ghost-number" aria-hidden="true">{{ stats.prereqs }}</span>
-          <div class="graph-copy-inner" v-reveal="1">
-            <div class="hub-eyebrow">01 — GRAFO DE DEPENDÊNCIAS</div>
-            <h2 class="section-h2">Veja o que cada<br />disciplina desbloqueia.</h2>
-            <p class="section-p">
-              Todas as disciplinas do curso mapeadas em um só canvas. Selecione qualquer nó e veja a
-              cadeia completa que ela destrava.
-            </p>
-            <div class="graph-facts hub-mono">
-              <span><span class="red">→</span> {{ stats.disciplines }} disciplinas mapeadas</span>
-              <span><span class="red">→</span> Arrastar e reorganizar livremente</span>
-              <span><span class="red">→</span> Cadeia completa de bloqueio visível</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- CALENDAR -->
     <section class="section-black">
       <div class="hub-wrap calendar-grid">
         <div v-reveal="0">
-          <div class="hub-eyebrow">03 — CALENDÁRIO</div>
+          <div class="hub-eyebrow">02 — CALENDÁRIO</div>
           <h2 class="section-h2 on-dark">Provas, entregas<br />e eventos do semestre.</h2>
         </div>
         <div class="calendar-list" v-reveal="1">
@@ -202,6 +179,28 @@ onMounted(loadCalendar)
           <div v-else class="calendar-empty hub-mono">Nenhum evento próximo.</div>
           <div class="calendar-more">
             <span class="hub-clickable" @click="navigate('/calendario')">Ver calendário completo →</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GRAPH -->
+    <section class="section-white">
+      <div class="hub-wrap graph-grid">
+        <div v-reveal="0"><graph-preview></graph-preview></div>
+        <div class="graph-copy">
+          <div class="graph-copy-inner" v-reveal="1">
+            <div class="hub-eyebrow">03 — GRAFO DE DEPENDÊNCIAS</div>
+            <h2 class="section-h2">Veja o que cada<br />disciplina desbloqueia.</h2>
+            <p class="section-p">
+              Todas as disciplinas do curso mapeadas em um só canvas. Selecione qualquer nó e veja a
+              cadeia completa que ela destrava.
+            </p>
+            <div class="graph-facts hub-mono">
+              <span><span class="red">→</span> {{ stats.disciplines }} disciplinas mapeadas</span>
+              <span><span class="red">→</span> Arrastar e reorganizar livremente</span>
+              <span><span class="red">→</span> Cadeia completa de bloqueio visível</span>
+            </div>
           </div>
         </div>
       </div>
@@ -459,18 +458,6 @@ onMounted(loadCalendar)
 }
 .graph-copy {
   position: relative;
-}
-.ghost-number {
-  position: absolute;
-  right: 0;
-  top: -70px;
-  font-family: var(--hub-font-display);
-  font-weight: 700;
-  font-size: 190px;
-  line-height: 1;
-  color: rgba(15, 15, 15, 0.05);
-  z-index: 0;
-  user-select: none;
 }
 .graph-copy-inner {
   position: relative;

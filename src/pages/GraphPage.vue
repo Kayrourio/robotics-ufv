@@ -93,12 +93,7 @@ onUnmounted(() => {
   padding: 14px 0;
   border-bottom: 1px solid var(--border);
 }
-.graph-header :deep(.hub-nav-inner) {
-  max-width: none;
-  padding: 0 16px;
-}
 .graph-header :deep(.hub-nav-mobile.open) {
-  max-width: none;
   border-bottom: 1px solid var(--border);
 }
 </style>

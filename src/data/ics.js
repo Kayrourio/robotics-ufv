@@ -14,7 +14,7 @@ function escapeText(s) {
 // então usamos VALUE=DATE com DTEND no dia seguinte (padrão iCalendar).
 export function buildIcs(events) {
   const now = dateStamp(new Date())
-  const lines = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//ERO Hub//Calendario//PT', 'CALSCALE:GREGORIAN']
+  const lines = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Robotica Hub//Calendario//PT', 'CALSCALE:GREGORIAN']
   events.forEach((e, i) => {
     const start = new Date(e.date + 'T00:00:00Z')
     if (Number.isNaN(start.getTime())) return
@@ -22,7 +22,7 @@ export function buildIcs(events) {
     const description = [e.discipline, e.description].filter(Boolean).join(' — ')
     lines.push(
       'BEGIN:VEVENT',
-      `UID:${now}-${i}@ero-hub`,
+      `UID:${now}-${i}@robotica-hub`,
       `DTSTAMP:${now}T000000Z`,
       `DTSTART;VALUE=DATE:${dateStamp(start)}`,
       `DTEND;VALUE=DATE:${dateStamp(end)}`,
@@ -36,7 +36,7 @@ export function buildIcs(events) {
   return lines.filter(Boolean).join('\r\n')
 }
 
-export function downloadIcs(events, filename = 'ero-hub-calendario.ics') {
+export function downloadIcs(events, filename = 'robotica-hub-calendario.ics') {
   const blob = new Blob([buildIcs(events)], { type: 'text/calendar;charset=utf-8' })
   const url = URL.createObjectURL(blob)
   const a = document.createElement('a')

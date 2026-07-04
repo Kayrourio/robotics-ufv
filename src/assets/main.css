@@ -50,13 +50,15 @@ body {
 #top-bar {
   height: 52px;
   flex: 0 0 auto;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 0 16px;
   background: var(--bg-panel);
   border-bottom: 1px solid var(--border);
   z-index: 20;
+}
+#top-bar .top-bar-inner {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 #top-bar .subtitle {
   font-family: 'IBM Plex Mono', monospace;
@@ -597,10 +599,13 @@ body {
 /* ---------- Mobile / touch ---------- */
 @media (max-width: 700px) {
   #top-bar {
-    flex-wrap: wrap;
     height: auto;
     min-height: 52px;
-    padding: 8px 10px;
+  }
+  #top-bar .top-bar-inner {
+    flex-wrap: wrap;
+    padding-top: 8px;
+    padding-bottom: 8px;
     row-gap: 8px;
     gap: 8px;
   }

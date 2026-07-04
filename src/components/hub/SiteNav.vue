@@ -25,7 +25,7 @@ function go(path) {
   <nav class="hub-nav" :class="{ 'on-dark': dark }">
     <div class="hub-wrap hub-nav-inner">
       <button class="hub-nav-brand" @click="go('/')">
-        ERO <span class="slash">//</span> HUB
+        ROBÓTICA <span class="slash">//</span> HUB
       </button>
       <div class="hub-nav-links">
         <button
