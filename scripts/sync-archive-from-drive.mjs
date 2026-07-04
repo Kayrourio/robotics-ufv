@@ -52,6 +52,9 @@ async function driveList(query, fields) {
     url.searchParams.set('fields', `nextPageToken, files(${fields})`)
     url.searchParams.set('pageSize', '1000')
     url.searchParams.set('key', API_KEY)
+    // cobre pastas dentro de Drives compartilhados também
+    url.searchParams.set('supportsAllDrives', 'true')
+    url.searchParams.set('includeItemsFromAllDrives', 'true')
     if (pageToken) url.searchParams.set('pageToken', pageToken)
 
     const res = await fetch(url)
@@ -81,7 +84,10 @@ async function buildDisciplineFiles(courseFolderId) {
   for (const folder of typeFolders) {
     const key = folder.name.trim().toLowerCase()
     const type = FOLDER_TO_TYPE[key]
-    if (!type) continue // pasta desconhecida (ex. "extras") — ignorada por enquanto
+    if (!type) {
+      console.warn(`    subpasta ignorada (nome fora do padrão exams/assignments/summaries/slides/books): ${folder.name}`)
+      continue
+    }
     const driveFiles = await listChildren(folder.id)
     for (const file of driveFiles) {
       files.push({
@@ -99,12 +105,29 @@ async function main() {
   assertEnv()
 
   const courseFolders = await listChildren(ROOT_ID, { foldersOnly: true })
+  console.log(`Pastas encontradas na raiz (${courseFolders.length}): ${courseFolders.map((f) => f.name).join(', ') || '(nenhuma)'}`)
+  if (!courseFolders.length) {
+    console.error(
+      'Nenhuma pasta visível na raiz. Causas prováveis:\n' +
+        '  1. DRIVE_ROOT_FOLDER_ID errado — deve ser só o ID (trecho depois de /folders/ na URL), não a URL inteira.\n' +
+        '  2. A pasta raiz não está compartilhada como "Qualquer pessoa com o link — Leitor" (a API key só enxerga arquivos públicos).\n' +
+        '  3. A API key está com restrição de referrer/IP — precisa ser "Nenhuma" em restrições de aplicativo.',
+    )
+    process.exit(1)
+  }
+
   const folderByCode = new Map(courseFolders.map((f) => [f.name.trim().toUpperCase(), f]))
+  const knownCodes = new Set(DISCIPLINES.map((d) => d.code))
+  const unmatched = courseFolders.filter((f) => !knownCodes.has(f.name.trim().toUpperCase()))
+  if (unmatched.length) {
+    console.warn(`Pastas ignoradas (nome não bate com nenhum código de disciplina): ${unmatched.map((f) => f.name).join(', ')}`)
+  }
 
   const disciplines = []
   for (const d of DISCIPLINES) {
     const folder = folderByCode.get(d.code)
     const files = folder ? await buildDisciplineFiles(folder.id) : []
+    if (folder) console.log(`  ${d.code}: ${files.length} arquivo(s)`)
     disciplines.push({ code: d.code, name: d.name, period: d.period, files })
   }
 
