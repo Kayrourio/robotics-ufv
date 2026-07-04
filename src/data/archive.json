@@ -41,7 +41,14 @@
       "code": "MAT141",
       "name": "Cálculo I",
       "period": 1,
-      "files": []
+      "files": [
+        {
+          "type": "lista",
+          "name": "Roteiro Pratica 10_e.pdf",
+          "date": "2026-07-04",
+          "url": "https://drive.google.com/file/d/1UipBvuL19YKQ3GnZNbCTQRbj1s_aXDRn/view?usp=drivesdk"
+        }
+      ]
     },
     {
       "code": "ELT270",
