@@ -2,7 +2,7 @@
 import { computed, defineAsyncComponent, onMounted } from 'vue'
 import { navigate } from '../router'
 import { DISCIPLINES, EDGES, DEFAULT_MAX_PERIOD } from '../data'
-import { sampleCards, typeBars, TYPES } from '../data/useArchive'
+import { sampleCards } from '../data/useArchive'
 import { calendarState, loadCalendar } from '../data/calendar'
 import SiteNav from '../components/hub/SiteNav.vue'
 import SiteFooter from '../components/hub/SiteFooter.vue'

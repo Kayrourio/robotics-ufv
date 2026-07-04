@@ -1,138 +1,341 @@
 {
-  "types": ["prova", "lista", "resumo", "slide", "livro"],
+  "types": [
+    "prova",
+    "lista",
+    "resumo",
+    "slide",
+    "livro"
+  ],
   "disciplines": [
-    { "code": "ECO270", "name": "Introdução à Economia", "period": 1, "files": [] },
-    { "code": "ELT170", "name": "Introdução à Engenharia de Robôs", "period": 1, "files": [] },
-    { "code": "ELT171", "name": "Ética, Sociedade e Robótica", "period": 1, "files": [] },
+    {
+      "code": "ECO270",
+      "name": "Introdução à Economia",
+      "period": 1,
+      "files": []
+    },
+    {
+      "code": "ELT170",
+      "name": "Introdução à Engenharia de Robôs",
+      "period": 1,
+      "files": []
+    },
+    {
+      "code": "ELT171",
+      "name": "Ética, Sociedade e Robótica",
+      "period": 1,
+      "files": []
+    },
     {
       "code": "FIS201",
       "name": "Física I",
       "period": 1,
-      "files": [
-        { "type": "prova", "name": "Prova 1 + gabarito", "date": "", "url": "" },
-        { "type": "lista", "name": "Lista 1 — Cinemática", "date": "", "url": "" },
-        { "type": "resumo", "name": "Resumo — Leis de Newton", "date": "", "url": "" },
-        { "type": "slide", "name": "Aula 03 — trabalho e energia", "date": "", "url": "" },
-        { "type": "slide", "name": "Aula 08 — momento linear", "date": "", "url": "" }
-      ]
+      "files": []
     },
     {
       "code": "INF100",
       "name": "Introdução à Programação I",
       "period": 1,
-      "files": [
-        { "type": "lista", "name": "Lista 1 — variáveis e laços", "date": "", "url": "" },
-        { "type": "slide", "name": "Aula 02 — estruturas de controle", "date": "", "url": "" },
-        { "type": "resumo", "name": "Resumo — funções", "date": "", "url": "" }
-      ]
+      "files": []
     },
     {
       "code": "MAT141",
       "name": "Cálculo I",
       "period": 1,
-      "files": [
-        { "type": "prova", "name": "Prova 1 + gabarito", "date": "", "url": "" },
-        { "type": "prova", "name": "Prova 2 + gabarito", "date": "", "url": "" },
-        { "type": "lista", "name": "Lista 1 — limites", "date": "", "url": "" },
-        { "type": "lista", "name": "Lista 2 — derivadas", "date": "", "url": "" },
-        { "type": "resumo", "name": "Resumo — regras de derivação", "date": "", "url": "" },
-        { "type": "livro", "name": "Cálculo — Stewart (cap. 1-4)", "date": "", "url": "" }
-      ]
+      "files": []
     },
-
-    { "code": "ELT270", "name": "Desenho Assistido por Computador", "period": 2, "files": [] },
-    { "code": "FIS224", "name": "Laboratório de Física A", "period": 2, "files": [] },
-    { "code": "INF101", "name": "Introdução à Programação II", "period": 2, "files": [] },
-    { "code": "MAT135", "name": "Geometria Analítica e Álgebra Linear", "period": 2, "files": [] },
-    { "code": "MAT143", "name": "Cálculo II", "period": 2, "files": [] },
-    { "code": "QUI100", "name": "Química Geral", "period": 2, "files": [] },
-
+    {
+      "code": "ELT270",
+      "name": "Desenho Assistido por Computador",
+      "period": 2,
+      "files": []
+    },
+    {
+      "code": "FIS224",
+      "name": "Laboratório de Física A",
+      "period": 2,
+      "files": []
+    },
+    {
+      "code": "INF101",
+      "name": "Introdução à Programação II",
+      "period": 2,
+      "files": []
+    },
+    {
+      "code": "MAT135",
+      "name": "Geometria Analítica e Álgebra Linear",
+      "period": 2,
+      "files": []
+    },
+    {
+      "code": "MAT143",
+      "name": "Cálculo II",
+      "period": 2,
+      "files": []
+    },
+    {
+      "code": "QUI100",
+      "name": "Química Geral",
+      "period": 2,
+      "files": []
+    },
     {
       "code": "ELT211",
       "name": "Sistemas Digitais",
       "period": 3,
-      "files": [
-        { "type": "lista", "name": "Lista 1 — álgebra booleana", "date": "", "url": "" },
-        { "type": "resumo", "name": "Resumo — mapas de Karnaugh", "date": "", "url": "" }
-      ]
+      "files": []
     },
-    { "code": "ELT216", "name": "Lab. Sistemas Digitais", "period": 3, "files": [] },
+    {
+      "code": "ELT216",
+      "name": "Lab. Sistemas Digitais",
+      "period": 3,
+      "files": []
+    },
     {
       "code": "ELT230",
       "name": "Fundamentos de Circuitos Elétricos",
       "period": 3,
-      "files": [
-        { "type": "prova", "name": "Prova 1 + gabarito", "date": "", "url": "" },
-        { "type": "lista", "name": "Lista 3 — Lei de Ohm e Kirchhoff", "date": "", "url": "" },
-        { "type": "resumo", "name": "Resumo — divisores de tensão", "date": "", "url": "" },
-        { "type": "slide", "name": "Aula 05 — potência elétrica", "date": "", "url": "" }
-      ]
+      "files": []
     },
-    { "code": "ELT271", "name": "Programação e Simulação de Robôs", "period": 3, "files": [] },
-    { "code": "EST106", "name": "Estatística I", "period": 3, "files": [] },
-    { "code": "FIS203", "name": "Física III", "period": 3, "files": [] },
+    {
+      "code": "ELT271",
+      "name": "Programação e Simulação de Robôs",
+      "period": 3,
+      "files": []
+    },
+    {
+      "code": "EST106",
+      "name": "Estatística I",
+      "period": 3,
+      "files": []
+    },
+    {
+      "code": "FIS203",
+      "name": "Física III",
+      "period": 3,
+      "files": []
+    },
     {
       "code": "MAT243",
       "name": "Cálculo III",
       "period": 3,
-      "files": [
-        { "type": "prova", "name": "Prova 1 + gabarito", "date": "", "url": "" },
-        { "type": "lista", "name": "Lista 2 — integrais múltiplas", "date": "", "url": "" },
-        { "type": "resumo", "name": "Resumo — mudança de variáveis", "date": "", "url": "" }
-      ]
+      "files": []
     },
-
-    { "code": "ADM100", "name": "Introdução à Administração", "period": 4, "files": [] },
-    { "code": "ELT110", "name": "Engenharia e Ciência dos Materiais", "period": 4, "files": [] },
+    {
+      "code": "ADM100",
+      "name": "Introdução à Administração",
+      "period": 4,
+      "files": []
+    },
+    {
+      "code": "ELT110",
+      "name": "Engenharia e Ciência dos Materiais",
+      "period": 4,
+      "files": []
+    },
     {
       "code": "ELT231",
       "name": "Circuitos Elétricos I",
       "period": 4,
-      "files": [
-        { "type": "prova", "name": "Prova 1 + gabarito", "date": "", "url": "" },
-        { "type": "lista", "name": "Lista 4 — Thévenin/Norton", "date": "", "url": "" },
-        { "type": "resumo", "name": "Resumo — análise nodal", "date": "", "url": "" },
-        { "type": "slide", "name": "Aula 07 — regime senoidal", "date": "", "url": "" }
-      ]
+      "files": []
     },
-    { "code": "ELT236", "name": "Lab. Circuitos Elétricos I", "period": 4, "files": [] },
-    { "code": "ELT414", "name": "Interfaces e Microprocessadores", "period": 4, "files": [] },
-    { "code": "FIS202", "name": "Física II", "period": 4, "files": [] },
-    { "code": "MAT340", "name": "Equações Diferenciais I", "period": 4, "files": [] },
-
-    { "code": "ELT210", "name": "Medidas Elétricas e Magnéticas", "period": 5, "files": [] },
-    { "code": "ELT215", "name": "Lab. Medidas Elétricas", "period": 5, "files": [] },
-    { "code": "ELT232", "name": "Circuitos Elétricos II", "period": 5, "files": [] },
-    { "code": "ELT237", "name": "Lab. Circuitos Elétricos II", "period": 5, "files": [] },
-    { "code": "ELT272", "name": "Prototipagem de Sistemas Robóticos", "period": 5, "files": [] },
-    { "code": "ELT310", "name": "Eletrônica I", "period": 5, "files": [] },
-    { "code": "ELT315", "name": "Lab. Eletrônica I", "period": 5, "files": [] },
-    { "code": "ENG275", "name": "Fenômenos de Transporte", "period": 5, "files": [] },
-    { "code": "FIS233", "name": "Mecânica", "period": 5, "files": [] },
-
-    { "code": "ELT330", "name": "Sistemas de Controle I", "period": 6, "files": [] },
-    { "code": "ELT373", "name": "Percepção Robótica I", "period": 6, "files": [] },
-    { "code": "ELT430", "name": "Modelagem e Identificação de Sistemas", "period": 6, "files": [] },
-    { "code": "EPR397", "name": "Gestão Ambiental", "period": 6, "files": [] },
-    { "code": "MAT271", "name": "Cálculo Numérico", "period": 6, "files": [] },
-
-    { "code": "ELT331", "name": "Sistemas de Controle II", "period": 7, "files": [] },
-    { "code": "ELT335", "name": "Lab. Sistemas de Controle", "period": 7, "files": [] },
-    { "code": "ELT350", "name": "Sinais e Sistemas", "period": 7, "files": [] },
-    { "code": "ELT355", "name": "Lab. Sinais e Sistemas", "period": 7, "files": [] },
-    { "code": "ELT374", "name": "Percepção Robótica II", "period": 7, "files": [] },
-    { "code": "ELT471", "name": "Robótica Industrial", "period": 7, "files": [] },
-    { "code": "ELT472", "name": "Robótica Móvel", "period": 7, "files": [] },
-    { "code": "ELT476", "name": "Lab. Robótica Industrial", "period": 7, "files": [] },
-
-    { "code": "ELT333", "name": "Controle Digital", "period": 8, "files": [] },
-    { "code": "ELT336", "name": "Fundamentos de Sistemas Lineares", "period": 8, "files": [] },
-    { "code": "ELT451", "name": "Inteligência Computacional", "period": 8, "files": [] },
-    { "code": "ELT477", "name": "Navegação de Robôs", "period": 8, "files": [] },
-
-    { "code": "ELT401", "name": "Projeto de Engenharia I", "period": 9, "files": [] },
-
-    { "code": "ELT402", "name": "Projeto de Engenharia II", "period": 10, "files": [] },
-    { "code": "ELT498", "name": "Estágio Supervisionado", "period": 10, "files": [] }
+    {
+      "code": "ELT236",
+      "name": "Lab. Circuitos Elétricos I",
+      "period": 4,
+      "files": []
+    },
+    {
+      "code": "ELT414",
+      "name": "Interfaces e Microprocessadores",
+      "period": 4,
+      "files": []
+    },
+    {
+      "code": "FIS202",
+      "name": "Física II",
+      "period": 4,
+      "files": []
+    },
+    {
+      "code": "MAT340",
+      "name": "Equações Diferenciais I",
+      "period": 4,
+      "files": []
+    },
+    {
+      "code": "ELT210",
+      "name": "Medidas Elétricas e Magnéticas",
+      "period": 5,
+      "files": []
+    },
+    {
+      "code": "ELT215",
+      "name": "Lab. Medidas Elétricas",
+      "period": 5,
+      "files": []
+    },
+    {
+      "code": "ELT232",
+      "name": "Circuitos Elétricos II",
+      "period": 5,
+      "files": []
+    },
+    {
+      "code": "ELT237",
+      "name": "Lab. Circuitos Elétricos II",
+      "period": 5,
+      "files": []
+    },
+    {
+      "code": "ELT272",
+      "name": "Prototipagem de Sistemas Robóticos",
+      "period": 5,
+      "files": []
+    },
+    {
+      "code": "ELT310",
+      "name": "Eletrônica I",
+      "period": 5,
+      "files": []
+    },
+    {
+      "code": "ELT315",
+      "name": "Lab. Eletrônica I",
+      "period": 5,
+      "files": []
+    },
+    {
+      "code": "ENG275",
+      "name": "Fenômenos de Transporte",
+      "period": 5,
+      "files": []
+    },
+    {
+      "code": "FIS233",
+      "name": "Mecânica",
+      "period": 5,
+      "files": []
+    },
+    {
+      "code": "ELT330",
+      "name": "Sistemas de Controle I",
+      "period": 6,
+      "files": []
+    },
+    {
+      "code": "ELT373",
+      "name": "Percepção Robótica I",
+      "period": 6,
+      "files": []
+    },
+    {
+      "code": "ELT430",
+      "name": "Modelagem e Identificação de Sistemas",
+      "period": 6,
+      "files": []
+    },
+    {
+      "code": "EPR397",
+      "name": "Gestão Ambiental",
+      "period": 6,
+      "files": []
+    },
+    {
+      "code": "MAT271",
+      "name": "Cálculo Numérico",
+      "period": 6,
+      "files": []
+    },
+    {
+      "code": "ELT331",
+      "name": "Sistemas de Controle II",
+      "period": 7,
+      "files": []
+    },
+    {
+      "code": "ELT335",
+      "name": "Lab. Sistemas de Controle",
+      "period": 7,
+      "files": []
+    },
+    {
+      "code": "ELT350",
+      "name": "Sinais e Sistemas",
+      "period": 7,
+      "files": []
+    },
+    {
+      "code": "ELT355",
+      "name": "Lab. Sinais e Sistemas",
+      "period": 7,
+      "files": []
+    },
+    {
+      "code": "ELT374",
+      "name": "Percepção Robótica II",
+      "period": 7,
+      "files": []
+    },
+    {
+      "code": "ELT471",
+      "name": "Robótica Industrial",
+      "period": 7,
+      "files": []
+    },
+    {
+      "code": "ELT472",
+      "name": "Robótica Móvel",
+      "period": 7,
+      "files": []
+    },
+    {
+      "code": "ELT476",
+      "name": "Lab. Robótica Industrial",
+      "period": 7,
+      "files": []
+    },
+    {
+      "code": "ELT333",
+      "name": "Controle Digital",
+      "period": 8,
+      "files": []
+    },
+    {
+      "code": "ELT336",
+      "name": "Fundamentos de Sistemas Lineares",
+      "period": 8,
+      "files": []
+    },
+    {
+      "code": "ELT451",
+      "name": "Inteligência Computacional",
+      "period": 8,
+      "files": []
+    },
+    {
+      "code": "ELT477",
+      "name": "Navegação de Robôs",
+      "period": 8,
+      "files": []
+    },
+    {
+      "code": "ELT401",
+      "name": "Projeto de Engenharia I",
+      "period": 9,
+      "files": []
+    },
+    {
+      "code": "ELT402",
+      "name": "Projeto de Engenharia II",
+      "period": 10,
+      "files": []
+    },
+    {
+      "code": "ELT498",
+      "name": "Estágio Supervisionado",
+      "period": 10,
+      "files": []
+    }
   ]
 }

@@ -5,7 +5,8 @@ import {
   archiveState,
   filteredPeriods,
   toggleExpanded,
-  typeBars,
+  typeCounts,
+  filesByType,
   TYPES,
   totalDisciplines,
   totalPeriods,
@@ -79,33 +80,40 @@ const typeFilters = ['todos', ...TYPES]
               <span class="hub-mono arc-card-files">{{ c.files.length }} arquivos</span>
             </div>
             <div class="arc-card-name">{{ c.name }}</div>
-            <div class="arc-bars">
+            <div class="arc-counts">
               <div
-                v-for="(hasType, ti) in typeBars(c)"
-                :key="ti"
-                class="arc-bar"
-                :class="hasType ? 'has' : 'none'"
-              ></div>
+                v-for="tc in typeCounts(c)"
+                :key="tc.type"
+                class="arc-count"
+                :class="{ zero: tc.count === 0 }"
+              >
+                <span class="arc-count-n hub-mono">{{ tc.count }}</span>
+                <span class="arc-count-t hub-mono">{{ tc.type }}</span>
+              </div>
             </div>
             <div v-if="archiveState.expanded.has(c.code)" class="arc-files">
               <div v-if="!c.files.length" class="arc-files-empty hub-mono">
                 Ainda sem material — contribua com o primeiro.
               </div>
-              <a
-                v-for="(f, fi) in c.files"
-                :key="fi"
-                class="arc-file-row"
-                :class="{ 'no-link': !f.url }"
-                :href="f.url || undefined"
-                target="_blank"
-                rel="noopener noreferrer"
-                @click.stop="!f.url && $event.preventDefault()"
-              >
-                <span class="hub-mono arc-file-type">{{ f.type }}</span>
-                <span class="arc-file-name">{{ f.name }}</span>
-                <span class="hub-mono arc-file-date">{{ f.date || '—' }}</span>
-                <span class="arc-file-dl" aria-hidden="true">↓</span>
-              </a>
+              <div v-for="group in filesByType(c)" :key="group.type" class="arc-group">
+                <div class="arc-group-head hub-mono">
+                  // {{ typeLabels[group.type].toUpperCase() }} <span class="arc-group-n">({{ group.count }})</span>
+                </div>
+                <a
+                  v-for="(f, fi) in group.files"
+                  :key="fi"
+                  class="arc-file-row"
+                  :class="{ 'no-link': !f.url }"
+                  :href="f.url || undefined"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  @click.stop="!f.url && $event.preventDefault()"
+                >
+                  <span class="arc-file-name">{{ f.name }}</span>
+                  <span class="hub-mono arc-file-date">{{ f.date || '—' }}</span>
+                  <span class="arc-file-dl" aria-hidden="true">↓</span>
+                </a>
+              </div>
             </div>
           </article>
         </div>
@@ -274,18 +282,37 @@ const typeFilters = ['todos', ...TYPES]
   line-height: 1.3;
   margin-bottom: 14px;
 }
-.arc-bars {
+.arc-counts {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+}
+.arc-count {
   display: flex;
-  gap: 3px;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  border: 1px solid var(--hub-line-soft);
+  border-radius: 3px;
+  padding: 6px 2px 5px;
 }
-.arc-bar {
-  height: 4px;
-  flex: 1;
-  border-radius: 1px;
-  background: var(--hub-line);
+.arc-count-n {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--hub-red);
+  line-height: 1;
 }
-.arc-bar.has {
-  background: var(--hub-red);
+.arc-count-t {
+  font-size: 8px;
+  letter-spacing: 0.5px;
+  color: var(--hub-muted);
+}
+.arc-count.zero .arc-count-n {
+  color: var(--hub-line);
+}
+.arc-count.zero .arc-count-t {
+  color: var(--hub-faint);
+  opacity: 0.6;
 }
 .arc-files {
   margin-top: 16px;
@@ -293,11 +320,24 @@ const typeFilters = ['todos', ...TYPES]
   padding-top: 12px;
   display: flex;
   flex-direction: column;
-  gap: 9px;
+  gap: 14px;
 }
 .arc-files-empty {
   font-size: 12px;
   color: var(--hub-faint);
+}
+.arc-group {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+.arc-group-head {
+  font-size: 10px;
+  letter-spacing: 1.2px;
+  color: var(--hub-faint);
+}
+.arc-group-head .arc-group-n {
+  color: var(--hub-red);
 }
 .arc-file-row {
   display: flex;
@@ -318,17 +358,6 @@ const typeFilters = ['todos', ...TYPES]
 }
 .arc-file-row.no-link .arc-file-dl {
   color: var(--hub-faint);
-}
-.arc-file-type {
-  font-size: 9px;
-  letter-spacing: 0.5px;
-  color: var(--hub-black);
-  border: 1px solid var(--hub-line);
-  padding: 2px 0;
-  border-radius: 2px;
-  flex-shrink: 0;
-  width: 48px;
-  text-align: center;
 }
 .arc-file-name {
   font-size: 13px;

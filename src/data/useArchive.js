@@ -46,8 +46,23 @@ export const totalDisciplines = archiveData.disciplines.length
 export const totalPeriods = new Set(archiveData.disciplines.map((d) => d.period)).size
 export const totalFiles = archiveData.disciplines.reduce((n, d) => n + d.files.length, 0)
 
-export function typeBars(discipline) {
-  return TYPES.map((type) => discipline.files.some((f) => f.type === type))
+// contagem de arquivos por tópico (prova/lista/resumo/slide/livro)
+export function typeCounts(discipline) {
+  return TYPES.map((type) => ({
+    type,
+    count: discipline.files.filter((f) => f.type === type).length,
+  }))
+}
+
+// arquivos agrupados por tópico, só tópicos com conteúdo
+export function filesByType(discipline) {
+  return typeCounts(discipline)
+    .filter((t) => t.count > 0)
+    .map((t) => ({
+      type: t.type,
+      count: t.count,
+      files: discipline.files.filter((f) => f.type === t.type),
+    }))
 }
 
 export function toggleExpanded(code) {
@@ -55,7 +70,11 @@ export function toggleExpanded(code) {
   else archiveState.expanded.add(code)
 }
 
-// Sample cards used on the landing page preview grid.
+// Cards da vitrine na landing: prioriza disciplinas com material; se o
+// archive ainda estiver vazio, mostra as primeiras do currículo.
 export function sampleCards(n = 7) {
-  return archiveData.disciplines.filter((d) => d.files.length > 0).slice(0, n)
+  const withFiles = archiveData.disciplines.filter((d) => d.files.length > 0)
+  if (withFiles.length >= n) return withFiles.slice(0, n)
+  const rest = archiveData.disciplines.filter((d) => d.files.length === 0)
+  return [...withFiles, ...rest].slice(0, n)
 }
