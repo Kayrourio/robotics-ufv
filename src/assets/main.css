@@ -80,7 +80,8 @@ body {
   outline: none;
 }
 #top-bar input[type='text']:focus {
-  border-color: var(--border-mid);
+  border-color: var(--red-mid);
+  box-shadow: 0 0 0 3px var(--red-glow);
 }
 #top-bar .spacer {
   flex: 1;
@@ -104,7 +105,7 @@ body {
 }
 #top-bar button:hover {
   background: var(--bg-hover);
-  border-color: var(--border-mid);
+  border-color: var(--red-mid);
 }
 
 /* ---------- Canvas ---------- */
@@ -136,13 +137,32 @@ body {
 
 #period-headers .period-header {
   position: absolute;
-  top: 24px;
+  top: 18px;
   width: 160px;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 11px;
+  pointer-events: none;
+}
+#period-headers .ph-num {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--red-mid);
+}
+#period-headers .ph-label {
+  font-size: 8px;
+  letter-spacing: 2.5px;
   color: var(--text-dim);
-  letter-spacing: 1px;
+}
+/* linha de coluna tracejada descendo do header (referência de período) */
+#period-headers .period-header::after {
+  content: '';
+  position: absolute;
+  left: 80px;
+  top: 42px;
+  height: 3800px;
+  border-left: 1px dashed rgba(240, 240, 240, 0.05);
 }
 
 #edges-svg {
@@ -181,6 +201,7 @@ body {
 .node-card:hover {
   background: var(--bg-hover);
   border-color: var(--border-mid);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
 }
 .node-card.state-selected {
   border-color: var(--red) !important;
@@ -340,14 +361,15 @@ body {
 
 .area-legend {
   position: absolute;
-  top: 12px;
+  bottom: 42px;
   left: 12px;
   display: flex;
   flex-wrap: wrap;
   gap: 4px 10px;
   max-width: 220px;
-  background: rgba(10, 10, 10, 0.7);
-  padding: 6px 10px;
+  background: rgba(10, 10, 10, 0.82);
+  border: 1px solid var(--border);
+  padding: 7px 10px;
   border-radius: 3px;
   pointer-events: none;
 }
@@ -375,9 +397,10 @@ body {
   bottom: 24px;
   width: 320px;
   background: var(--bg-panel);
-  border-left: 1px solid var(--border);
-  transform: translateX(320px);
-  transition: transform 250ms ease;
+  border-left: 2px solid var(--red);
+  box-shadow: -12px 0 32px rgba(0, 0, 0, 0.35);
+  transform: translateX(330px);
+  transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
   z-index: 30;
   display: flex;
   flex-direction: column;

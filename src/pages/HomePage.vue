@@ -1,12 +1,15 @@
 <script setup>
-import { computed, onMounted } from 'vue'
+import { computed, defineAsyncComponent, onMounted } from 'vue'
 import { navigate } from '../router'
 import { DISCIPLINES, EDGES, DEFAULT_MAX_PERIOD } from '../data'
 import { sampleCards, typeBars, TYPES } from '../data/useArchive'
 import { calendarState, loadCalendar } from '../data/calendar'
 import SiteNav from '../components/hub/SiteNav.vue'
 import SiteFooter from '../components/hub/SiteFooter.vue'
-import RobotBlueprint from '../components/hub/RobotBlueprint.vue'
+
+// three.js pesa ~170KB gzip — carregado async para não engordar o chunk
+// principal (as outras rotas não usam)
+const R2D2Blueprint = defineAsyncComponent(() => import('../components/hub/R2D2Blueprint.vue'))
 import GraphPreview from '../components/hub/GraphPreview.vue'
 import TelemetryStat from '../components/hub/TelemetryStat.vue'
 
@@ -65,31 +68,26 @@ onMounted(loadCalendar)
           </div>
         </div>
 
-        <div class="hero-robot-col" v-reveal="3">
-          <robot-blueprint></robot-blueprint>
-        </div>
-
         <div class="hero-stats-col">
           <telemetry-stat :value="stats.disciplines" label="DISCIPLINAS" :delay="0">
             <template #icon>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 2 L21 7 V17 L12 22 L3 17 V7 Z" /><path d="M3 7 L12 12 L21 7" /><path d="M12 12 V22" /></svg>
             </template>
           </telemetry-stat>
-          <telemetry-stat :value="stats.prereqs" label="PRÉ-REQUISITOS" :delay="1">
-            <template #icon>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="6" cy="12" r="2.4" /><circle cx="18" cy="6" r="2.4" /><circle cx="18" cy="18" r="2.4" /><path d="M8.1 10.9 L15.9 7.1" /><path d="M8.1 13.1 L15.9 16.9" /></svg>
-            </template>
-          </telemetry-stat>
-          <telemetry-stat :value="stats.hours" suffix="h" label="CARGA HORÁRIA" :delay="2">
+          <telemetry-stat :value="stats.hours" suffix="h" label="CARGA HORÁRIA" :delay="1">
             <template #icon>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9" /><path d="M12 7 V12 L15.5 14" stroke-linecap="round" /></svg>
             </template>
           </telemetry-stat>
-          <telemetry-stat :value="stats.periods" label="PERÍODOS" :delay="3">
+          <telemetry-stat :value="stats.periods" label="PERÍODOS" :delay="2">
             <template #icon>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3.5" y="5" width="17" height="15.5" rx="2" /><path d="M3.5 9.5 H20.5" /><path d="M8 3 V6.5" /><path d="M16 3 V6.5" /></svg>
             </template>
           </telemetry-stat>
+        </div>
+
+        <div class="hero-robot-col" v-reveal="3">
+          <r2-d2-blueprint></r2-d2-blueprint>
         </div>
       </div>
 
@@ -139,7 +137,7 @@ onMounted(loadCalendar)
           <div
             v-for="(c, i) in previewCards"
             :key="c.code"
-            class="archive-card hub-scan-card"
+            class="archive-card hub-scan-card hub-lift"
             v-reveal="i"
           >
             <div class="archive-card-code hub-mono">{{ c.code }}</div>
@@ -233,10 +231,14 @@ onMounted(loadCalendar)
 .hero-grid {
   position: relative;
   display: grid;
-  grid-template-columns: 1fr 1.02fr 0.8fr;
+  grid-template-columns: 1.2fr 0.62fr 1fr;
   align-items: center;
-  gap: 20px;
+  gap: 36px;
   padding: 58px 0 62px;
+}
+.hero-stats-col {
+  justify-self: start;
+  min-width: 210px;
 }
 .hero-h1 {
   font-family: var(--hub-font-display);
@@ -557,12 +559,12 @@ onMounted(loadCalendar)
     grid-template-columns: 1fr;
   }
   .hero-robot-col {
-    order: 1;
-    max-width: 280px;
+    max-width: 340px;
+    width: 100%;
     margin: 8px auto 0;
   }
   .hero-stats-col {
-    order: 2;
+    justify-self: stretch;
   }
   .quick-grid {
     grid-template-columns: repeat(2, 1fr);

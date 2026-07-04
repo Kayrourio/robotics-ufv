@@ -69,7 +69,7 @@ const typeFilters = ['todos', ...TYPES]
           <article
             v-for="(c, i) in p.disciplines"
             :key="c.code"
-            class="arc-card hub-scan-card"
+            class="arc-card hub-scan-card hub-lift"
             :class="{ active: archiveState.expanded.has(c.code) }"
             v-reveal="i"
             @click="toggleExpanded(c.code)"
@@ -246,7 +246,6 @@ const typeFilters = ['todos', ...TYPES]
   border-radius: 4px;
   padding: 20px;
   cursor: pointer;
-  transition: border-color 150ms;
 }
 .arc-card:hover {
   border-color: #b8b8b8;

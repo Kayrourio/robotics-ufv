@@ -17,11 +17,11 @@ function boot() {
     display.value = String(props.value)
     return
   }
-  const duration = 700
+  const duration = 1200
   const start = performance.now()
   function tick(now) {
     const p = Math.min(1, (now - start) / duration)
-    const eased = 1 - Math.pow(1 - p, 3)
+    const eased = 1 - Math.pow(1 - p, 4)
     display.value = Math.round(numeric * eased).toString()
     if (p < 1) requestAnimationFrame(tick)
     else display.value = String(numeric)

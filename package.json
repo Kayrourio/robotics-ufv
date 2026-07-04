@@ -10,9 +10,11 @@
     "format": "prettier --write --experimental-cli src/"
   },
   "dependencies": {
+    "three": "^0.185.1",
     "vue": "beta"
   },
   "devDependencies": {
+    "@types/three": "^0.185.0",
     "@vitejs/plugin-vue": "^6.0.7",
     "prettier": "3.8.4",
     "vite": "^8.0.16",

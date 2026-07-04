@@ -59,7 +59,7 @@ function open(link) {
           <button
             v-for="(l, i) in g.links"
             :key="l.label"
-            class="lk-card hub-scan-card hub-clickable"
+            class="lk-card hub-scan-card hub-clickable hub-lift"
             :class="{ disabled: !l.url }"
             v-reveal="i"
             @click="open(l)"
@@ -164,7 +164,6 @@ function open(link) {
   cursor: pointer;
   font: inherit;
   color: inherit;
-  transition: border-color 150ms;
 }
 .lk-card:hover {
   border-color: var(--hub-red);
