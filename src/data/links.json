@@ -1,0 +1,37 @@
+[
+  {
+    "category": "UFV",
+    "links": [
+      { "label": "Portal do Aluno (SIE)", "description": "Matrícula, histórico e requerimentos.", "url": "" },
+      { "label": "PVANet / SIGA", "description": "Ambiente virtual de aprendizagem.", "url": "" },
+      { "label": "Biblioteca Central (BBT)", "description": "Acervo, empréstimos e periódicos.", "url": "" },
+      { "label": "Calendário Acadêmico UFV", "description": "Datas oficiais do semestre.", "url": "" },
+      { "label": "Restaurante Universitário (RU)", "description": "Cardápio e horários.", "url": "" }
+    ]
+  },
+  {
+    "category": "Curso",
+    "links": [
+      { "label": "Coordenação de ERO", "description": "Contato e horário de atendimento.", "url": "" },
+      { "label": "Projeto Pedagógico do Curso", "description": "Ementas e fluxograma oficial.", "url": "" },
+      { "label": "DA / Centro Acadêmico", "description": "Representação estudantil de ERO.", "url": "" },
+      { "label": "Grupo de WhatsApp / Discord da turma", "description": "Avisos e dúvidas rápidas.", "url": "" }
+    ]
+  },
+  {
+    "category": "Estudo",
+    "links": [
+      { "label": "ERO Archive", "description": "Provas, listas e resumos — dentro do hub.", "url": "/archive" },
+      { "label": "Grafo Curricular", "description": "Dependências entre disciplinas — dentro do hub.", "url": "/grafo" },
+      { "label": "Overleaf", "description": "Editor LaTeX colaborativo para relatórios.", "url": "" },
+      { "label": "GeoGebra", "description": "Visualização gráfica para Cálculo e Física.", "url": "" }
+    ]
+  },
+  {
+    "category": "Carreira",
+    "links": [
+      { "label": "Estágios e Oportunidades (CAE)", "description": "Vagas de estágio divulgadas pela UFV.", "url": "" },
+      { "label": "Empresa Júnior de Robótica", "description": "Projetos de extensão e mercado.", "url": "" }
+    ]
+  }
+]

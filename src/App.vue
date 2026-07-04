@@ -1,36 +1,27 @@
 <script setup>
-import { onMounted, onUnmounted } from 'vue'
-import { store } from './store'
-import { zoomFit, resetLayout, applyNodeStates, deselectNode, panBy } from './canvasEngine'
-import TopBar from './components/TopBar.vue'
-import GraphCanvas from './components/GraphCanvas.vue'
-import SidePanel from './components/SidePanel.vue'
-import BottomBar from './components/BottomBar.vue'
+import { computed } from 'vue'
+import { route } from './router'
+import HomePage from './pages/HomePage.vue'
+import ArchivePage from './pages/ArchivePage.vue'
+import CalendarPage from './pages/CalendarPage.vue'
+import LinksPage from './pages/LinksPage.vue'
+import GraphPage from './pages/GraphPage.vue'
+import PageWipe from './components/hub/PageWipe.vue'
+import CursorFX from './components/hub/CursorFX.vue'
 
-function onKeydown(e) {
-  if (e.key === 'Escape') {
-    if (store.search) {
-      store.search = ''
-      applyNodeStates()
-    } else {
-      deselectNode()
-    }
-  }
-  if (e.key === 'f' || e.key === 'F') zoomFit()
-  if (e.key === 'r' || e.key === 'R') resetLayout()
-  if (e.key === 'ArrowLeft') panBy(40, 0)
-  if (e.key === 'ArrowRight') panBy(-40, 0)
-  if (e.key === 'ArrowUp') panBy(0, 40)
-  if (e.key === 'ArrowDown') panBy(0, -40)
+const pages = {
+  '/': HomePage,
+  '/archive': ArchivePage,
+  '/calendario': CalendarPage,
+  '/links': LinksPage,
+  '/grafo': GraphPage,
 }
 
-onMounted(() => document.addEventListener('keydown', onKeydown))
-onUnmounted(() => document.removeEventListener('keydown', onKeydown))
+const page = computed(() => pages[route.path] || HomePage)
 </script>
 
 <template>
-  <top-bar></top-bar>
-  <graph-canvas></graph-canvas>
-  <side-panel></side-panel>
-  <bottom-bar></bottom-bar>
+  <component :is="page" :key="route.path" />
+  <page-wipe></page-wipe>
+  <cursor-f-x></cursor-f-x>
 </template>

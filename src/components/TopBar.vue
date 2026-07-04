@@ -14,16 +14,15 @@ function toggleLocale() {
 
 <template>
   <div id="top-bar">
-    <div class="brand">
-      <span class="title">ERO · UFV</span>
-      <span class="subtitle">{{ t('subtitle') }}</span>
-    </div>
+    <span class="subtitle">{{ t('subtitle') }}</span>
     <div class="search-wrap">
       <input type="text" :placeholder="t('search')" v-model="store.search" @input="onSearchInput" />
     </div>
     <div class="spacer"></div>
-    <button @click="zoomFit">{{ t('fit') }} (F)</button>
-    <button @click="resetLayout">{{ t('reset') }} (R)</button>
-    <button @click="toggleLocale">{{ store.locale === 'pt' ? 'EN' : 'PT' }}</button>
+    <div class="tb-actions">
+      <button @click="zoomFit">{{ t('fit') }}<span class="kbd-hint"> (F)</span></button>
+      <button @click="resetLayout">{{ t('reset') }}<span class="kbd-hint"> (R)</span></button>
+      <button @click="toggleLocale">{{ store.locale === 'pt' ? 'EN' : 'PT' }}</button>
+    </div>
   </div>
 </template>

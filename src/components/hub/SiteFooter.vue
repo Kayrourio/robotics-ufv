@@ -1,0 +1,25 @@
+<script setup>
+import { navigate } from '../../router'
+
+const links = [
+  { path: '/grafo', label: 'grafo' },
+  { path: '/archive', label: 'archive' },
+  { path: '/calendario', label: 'calendário' },
+  { path: '/links', label: 'links' },
+]
+</script>
+
+<template>
+  <footer class="hub-footer">
+    <span class="hub-footer-brand">ERO <span style="color: var(--hub-red)">//</span> HUB · UFV · 2026</span>
+    <div class="hub-footer-links">
+      <button v-for="l in links" :key="l.path" @click="navigate(l.path)">{{ l.label }}</button>
+    </div>
+    <a
+      class="hub-footer-gh"
+      href="https://github.com/ero-ufv/hub"
+      target="_blank"
+      rel="noopener noreferrer"
+    >github.com/ero-ufv/hub ↗</a>
+  </footer>
+</template>

@@ -1,0 +1,46 @@
+name: Sync Archive from Drive
+
+on:
+  push:
+    branches: [main]
+    # evita loop: um commit feito por este próprio workflow não deve
+    # disparar uma nova rodada dele mesmo
+    paths-ignore:
+      - 'src/data/archive.json'
+      - '.github/workflows/sync-archive.yml'
+  schedule:
+    - cron: '0 6 * * *' # diariamente às 06:00 UTC, caso o Drive mude sem nenhum commit
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Sync archive.json from Google Drive
+        env:
+          DRIVE_API_KEY: ${{ secrets.DRIVE_API_KEY }}
+          DRIVE_ROOT_FOLDER_ID: ${{ secrets.DRIVE_ROOT_FOLDER_ID }}
+        run: node scripts/sync-archive-from-drive.mjs
+
+      - name: Commit changes if any
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add src/data/archive.json
+          if git diff --cached --quiet; then
+            echo "Sem mudanças no Drive."
+          else
+            git commit -m "chore: sync archive.json from Drive [skip ci]"
+            git push
+          fi
