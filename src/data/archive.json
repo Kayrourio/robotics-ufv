@@ -29,7 +29,56 @@
       "code": "FIS201",
       "name": "Física I",
       "period": 1,
-      "files": []
+      "files": [
+        {
+          "type": "prova",
+          "name": "prova 3 gabarito_aac174c425481975e74c9ce949b3f59b.pdf",
+          "date": "2026-07-17",
+          "url": "https://drive.google.com/file/d/1PtaQBBllFz8Tg8vhNCjhGPmdB-niC75D/view?usp=drivesdk"
+        },
+        {
+          "type": "prova",
+          "name": "prova 4 gabarito.pdf",
+          "date": "2026-07-17",
+          "url": "https://drive.google.com/file/d/1EAYqDGyBu-3bFJiqonSn8zqMrvLkIOUr/view?usp=drivesdk"
+        },
+        {
+          "type": "prova",
+          "name": "P4 25-2.pdf",
+          "date": "2026-07-17",
+          "url": "https://drive.google.com/file/d/1JzpAVGXihh9Ec3uuip7uGo_CMudqMG4J/view?usp=drivesdk"
+        },
+        {
+          "type": "prova",
+          "name": "Gabarito Prova 3-1.PDF",
+          "date": "2026-07-17",
+          "url": "https://drive.google.com/file/d/1Ni9OdEas4kxHuXleXKzAV60yQycCwcZi/view?usp=drivesdk"
+        },
+        {
+          "type": "prova",
+          "name": "Gabarito Prova 3.pdf",
+          "date": "2026-07-17",
+          "url": "https://drive.google.com/file/d/1nCSInhqMDiTvCW728dMyh3mgbh4wtNW8/view?usp=drivesdk"
+        },
+        {
+          "type": "prova",
+          "name": "Física I - P1 (2025.2).pdf",
+          "date": "2026-07-17",
+          "url": "https://drive.google.com/file/d/1oNxCJCe4QwofSqyeyvHGZ5ppjyCxJkwd/view?usp=drivesdk"
+        },
+        {
+          "type": "prova",
+          "name": "FIS 201 - prova 1.pdf",
+          "date": "2026-07-17",
+          "url": "https://drive.google.com/file/d/1XfSYs2yufJPPrtqHUsmH3p7RyiZNxUMw/view?usp=drivesdk"
+        },
+        {
+          "type": "livro",
+          "name": "young-freedman-1.pdf",
+          "date": "2026-07-17",
+          "url": "https://drive.google.com/file/d/1mvcfLtgZBEsu4Acl-XqQ7OEGRnAhYCwb/view?usp=drivesdk"
+        }
+      ]
     },
     {
       "code": "INF100",
@@ -71,7 +120,20 @@
       "code": "MAT143",
       "name": "Cálculo II",
       "period": 2,
-      "files": []
+      "files": [
+        {
+          "type": "livro",
+          "name": "Stewart - Cálculo, Vol 2 - 9ª ed ",
+          "date": "2026-07-17",
+          "url": "https://drive.google.com/file/d/1L8YdGe8qV_GvOSu6HS0x6sadieRzVwUS/view?usp=drivesdk"
+        },
+        {
+          "type": "livro",
+          "name": "Guidorizzi - Um Curso de Cálculo – Volume 2, 6ª ed.pdf",
+          "date": "2026-07-17",
+          "url": "https://drive.google.com/file/d/1gq3sLebzd7qp7BVFLmVULSGlrY6pW5db/view?usp=drivesdk"
+        }
+      ]
     },
     {
       "code": "QUI100",
