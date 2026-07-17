@@ -116,16 +116,24 @@ async function findOrCreateFolder(token, parentId, name) {
   return createFolder(token, parentId, name)
 }
 
-async function initResumableUpload(token, folderId, fileName, mimeType) {
+async function initResumableUpload(token, folderId, fileName, mimeType, origin) {
+  const headers = {
+    Authorization: `Bearer ${token}`,
+    'Content-Type': 'application/json; charset=UTF-8',
+    'X-Upload-Content-Type': mimeType || 'application/octet-stream',
+  }
+  // O Google só habilita CORS na sessão resumível pra origens que aparecem
+  // no header Origin da requisição que a criou. Como quem inicia a sessão é
+  // esta function (servidor), precisamos repassar a origem do navegador que
+  // vai de fato fazer o PUT do arquivo — senão o upload direto do browser
+  // falha silenciosamente como erro de rede/CORS.
+  if (origin) headers.Origin = origin
+
   const res = await fetch(
     'https://www.googleapis.com/upload/drive/v3/files?uploadType=resumable&supportsAllDrives=true',
     {
       method: 'POST',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json; charset=UTF-8',
-        'X-Upload-Content-Type': mimeType || 'application/octet-stream',
-      },
+      headers,
       body: JSON.stringify({ name: fileName, parents: [folderId] }),
     },
   )
@@ -198,7 +206,7 @@ export default async function handler(req, res) {
     const token = await getAccessToken(email, privateKey)
     const disciplineFolderId = await findOrCreateFolder(token, rootId, code)
     const typeFolderId = await findOrCreateFolder(token, disciplineFolderId, folder)
-    const uploadUrl = await initResumableUpload(token, typeFolderId, fileName, mimeType)
+    const uploadUrl = await initResumableUpload(token, typeFolderId, fileName, mimeType, req.headers.origin)
     res.status(200).json({ uploadUrl })
   } catch (err) {
     console.error(err)
