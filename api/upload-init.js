@@ -134,9 +134,23 @@ export default async function handler(req, res) {
   const expectedPassword = process.env.UPLOAD_ACCESS_PASSWORD
   const rootId = process.env.DRIVE_ROOT_FOLDER_ID
   const email = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL
-  const privateKey = (process.env.GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY || '').replace(/\\n/g, '\n')
+  // Tolera aspas envolvendo o valor (comuns quando alguém cola o formato de
+  // .env, com aspas literais, direto no campo de env var da Vercel — lá elas
+  // não são removidas automaticamente como um dotenv faria) e normaliza os
+  // "\n" escapados de volta pra quebras de linha reais do PEM.
+  const privateKey = (process.env.GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY || '')
+    .trim()
+    .replace(/^['"]|['"]$/g, '')
+    .replace(/\\n/g, '\n')
   if (!expectedPassword || !rootId || !email || !privateKey) {
     res.status(500).json({ error: 'Upload não configurado no servidor.' })
+    return
+  }
+  if (!privateKey.includes('BEGIN PRIVATE KEY')) {
+    res.status(500).json({
+      error:
+        'GOOGLE_SERVICE_ACCOUNT_PRIVATE_KEY malformada no servidor (não parece um PEM válido). Confira se colou o valor sem aspas ao redor no painel da Vercel.',
+    })
     return
   }
 
